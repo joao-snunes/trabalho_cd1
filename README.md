@@ -27,3 +27,8 @@ Através da plotagem de boxplots (imagem acima) foi possível observar que não 
 A variável alvo "is_bot_flag" apresenta uma distribuição balanceada, onde 282 amostras são de humanos e 218 são bots.
 ![distribuição da variável alvo](images/distribuicao_is_bot_flag.png).
 
+### Correlação entre as variáveis:
+Através da plotagem de um mapa de calor, foi possivel observar que as variáveis numéricas, em geral, apresentam uma forte correlação com a variável alvo, em especial "reply_delay_seconds", "avg_word_lenght" e "contain_links", revelando que podem ser importantes para a classificação.
+![mapa de calor](images/correlacao_variaveis.png).
+
+##
