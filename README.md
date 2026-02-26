@@ -31,4 +31,50 @@ A variável alvo "is_bot_flag" apresenta uma distribuição balanceada, onde 282
 Através da plotagem de um mapa de calor, foi possivel observar que as variáveis numéricas, em geral, apresentam uma forte correlação com a variável alvo, em especial "reply_delay_seconds", "avg_word_lenght" e "contain_links", revelando que podem ser importantes para a classificação.
 ![mapa de calor](images/correlacao_variaveis.png).
 
-##
+## Pré-Processamento:
+
+Variáveis Removidas:
+comment_id (identificador sem poder preditivo)
+bot_type_label (redundante com alvo)
+bot_probability (derivada da variável alvo)_
+
+Codificação de Variáveis Categóricas:
+A variável 'subreddit' foi transformada utilizando One-Hot Encoding, resultando em 6 novas colunas ('funny', 'gaming', 'politics', 'worldnews', 'technology', 'pics').
+
+A ausência de outliers, valores nulos e duplicados, juntamente com a base balanceada e variáveis fortemente relacionadas permitiu com que o pré-processamento fosse simples. 
+
+Para as variáveis numéricas, optamos por utilizar as técnicas de padronização (StandardScaler) e normalização (MinMaxScaler) para termos uma comparação do quanto isso impactaria no resultado final.
+
+## Cross-validation (5-Folds):
+Foi utilizado o método de grid-search para analisar os resultados dos modelos com diferentes parâmetros, as métricas de avaliação utilizadas foram a F1-Score e a ROC-AUC, que permitem cálcular o desempenho geral do modelo, levando em consideração tanto a precisão quanto o recall, além de avaliar a capacidade de discriminação das classes.
+
+### KNN com parâmetro (K):
+Utilizando StandardScaler:
+![resultados_KNN_StandardScaler.png](images/resultados_KNN_StandardScaler.png)
+
+Utilizando MinMaxScaler:
+![KNN com MinMaxScaler](images/resultados_KNN_MinMaxScaler.png)
+
+### Regresão Logística com parâmetro (C):
+Utilizando StandardScaler:
+![resultados_LogisticRegression_StandardScaler.png](images/resultados_LogisticRegression_StandardScaler.png)
+
+Utilizando MinMaxScaler:
+![Regressão Logistica com MinMaxScaler](images/resultados_LogisticRegression_MinMaxScaler.png)
+
+### Naive Bayes com parâmetro (var_smoothing):
+Utilizando StandardScaler:
+![resultados_NaiveBayes_StandardScaler.png](images/resultados_NaiveBayes_StandardScaler.png)
+
+Utilizando MinMaxScaler:
+![resultados_NaiveBayes_MinMaxScaler.png](images/resultados_NaiveBayes_MinMaxScaler.png)
+
+## Resultados na Base de teste (30% - 150 amostras):
+### Análise geral:
+Pudemos observar um ótimo desempenho dos modelos, todos apresentaram um F1-Score acima de 0.96 na base de teste independentemente da técnica de pré-processamento utilizada, indicando que os modelos conseguiram distinguir e generalizar muito bem os dados da base. Todos os modelos obtiveram um F1-Score muito próximo, enquanto o Naive-Bayes se destacou ao obter o ROC-AUC perfeito, de 1.0. Tudo isso reforça a ideia de que a base é muito simples para os modelos utilizados, conforme já mencionado na seção de pré-processamento, diferente da base de Alzheimer.
+Os resultados da base de Teste podem ser análisados através das matrizes de confusão e métricas de avaliação abaixo:
+### Matrizes de confusão:
+![matrizes_confusao_teste.png](images/matrizes_confusao_teste.png)
+
+### Métricas de avaliação:
+![resultados_testes.png](images/resultados_testes.png)
